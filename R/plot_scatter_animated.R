@@ -41,7 +41,7 @@ plot_scatter_animated <- function(data,
   rlang::arg_match(data_level)
 
   caption <- ""
-  if (!is.null(scenario_source) | !is.null(scenario) | !is.null(region)) {
+  if (!is.null(scenario_source) || !is.null(scenario) || !is.null(region)) {
     if (!is.null(scenario)) {
       caption <- glue::glue("Scenario: {beautify_scenario_label(scenario)}\n", .trim = FALSE)
     }
@@ -291,17 +291,17 @@ check_plot_scatter_animated <- function(data,
     "phaseout", "net", "year"
   ))
   if (!is.null(alignment_limit)) {
-    if ((length(alignment_limit) != 1) | (!is.numeric(alignment_limit))) {
+    if ((length(alignment_limit) != 1) || (!is.numeric(alignment_limit))) {
       rlang::abort("'alignment_limit' must be a numeric value.")
     }
   }
   if (!is.null(cap_outliers)) {
-    if ((length(cap_outliers) != 1) | (!is.numeric(cap_outliers))) {
+    if ((length(cap_outliers) != 1) || (!is.numeric(cap_outliers))) {
       rlang::abort("'cap_outliers' must be a numeric value.")
     }
   }
   if (!is.null(floor_outliers)) {
-    if ((length(floor_outliers) != 1) | (!is.numeric(floor_outliers))) {
+    if ((length(floor_outliers) != 1) || (!is.numeric(floor_outliers))) {
       rlang::abort("'floor_outliers' must be a numeric value.")
     }
   }

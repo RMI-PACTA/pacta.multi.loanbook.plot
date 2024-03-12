@@ -28,7 +28,7 @@ plot_timeline <- function(data,
                           subtitle = NULL,
                           alignment_limits = NULL) {
   caption <- ""
-  if (!is.null(scenario_source) | !is.null(scenario) | !is.null(region)) {
+  if (!is.null(scenario_source) || !is.null(scenario) || !is.null(region)) {
     if (!is.null(scenario)) {
       caption <- glue::glue("Scenario: {beautify_scenario_label(scenario)}\n", .trim = FALSE)
     }
@@ -107,7 +107,7 @@ check_timeline <- function(data, alignment_limits) {
     "direction", "year",
     "exposure_weighted_net_alignment", "group_id"
   ))
-  if ((length(alignment_limits) != 2) | (!is.numeric(alignment_limits))) {
+  if ((length(alignment_limits) != 2) || (!is.numeric(alignment_limits))) {
     rlang::abort("'alignment_limits' must be a numeric vector of size 2.")
   }
 }
