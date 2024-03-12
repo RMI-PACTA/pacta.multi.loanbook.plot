@@ -2,15 +2,15 @@ Package: pacta.multi.loanbook.plot
 Title: Tools to Visualize Climate Metrics for Multiple Loanbooks
 Version: 0.0.0.9000
 Authors@R: 
-    c(person(given = "Jacob",
-             family = "Kastl",
-             role = c("aut", "cre"),
-             email = "jacob.kastl@gmail.com"),
-      person(given = "Monika",
+    c(person(given = "Monika",
              family = "Furdyna",
-             role = c("aut", "ctb"),
+             role = c("aut", "cre"),
              email = "monika.furdyna@gmail.com",
              comment = c(ORCID = "0000-0002-3728-0646")),
+      person(given = "Jacob",
+             family = "Kastl",
+             role = c("aut", "ctb"),
+             email = "jacob.kastl@gmail.com"),
       person(given = "RMI",
              role = c("cph", "fnd"),
              email = "PACTA4banks@rmi.org"))
