@@ -119,7 +119,7 @@ plot_scatter_animated <- function(data,
       x = ~buildout,
       y = ~phaseout,
       frame = ~year,
-      showlegend = T,
+      showlegend = TRUE,
       color = ~net,
       colors = grDevices::colorRamp(c("#e10000", "#FFFFFF", "#3d8c40")),
       symbol = ~datapoint,
@@ -132,7 +132,7 @@ plot_scatter_animated <- function(data,
       x = ~buildout,
       y = ~phaseout,
       frame = ~year,
-      showlegend = F,
+      showlegend = FALSE,
       color = ~net,
       colors = grDevices::colorRamp(c("#e10000", "#FFFFFF", "#3d8c40")),
       symbol = ~datapoint,
@@ -147,7 +147,7 @@ plot_scatter_animated <- function(data,
       data = data,
       text = ~name,
       marker = list(
-        autocolorscale = F,
+        autocolorscale = FALSE,
         cmin = -alignment_limit_net,
         cmid = 0,
         cmax = alignment_limit_net
@@ -165,7 +165,7 @@ plot_scatter_animated <- function(data,
       xref = "paper",
       y = 0.99,
       yref = "paper",
-      showarrow = F,
+      showarrow = FALSE,
       align = "right",
       font = list(color = "#c0c0c0")
     ) %>%
@@ -176,7 +176,7 @@ plot_scatter_animated <- function(data,
       xanchor = "right",
       y = 0.99,
       yref = "paper",
-      showarrow = F,
+      showarrow = FALSE,
       align = "right",
       font = list(color = "#c0c0c0")
     ) %>%
@@ -186,7 +186,7 @@ plot_scatter_animated <- function(data,
       xref = "paper",
       y = 0.01,
       yref = "paper",
-      showarrow = F,
+      showarrow = FALSE,
       align = "left",
       font = list(color = "#c0c0c0")
     ) %>%
@@ -197,7 +197,7 @@ plot_scatter_animated <- function(data,
       xanchor = "left",
       y = 0.01,
       yref = "paper",
-      showarrow = F,
+      showarrow = FALSE,
       align = "left",
       font = list(color = "#c0c0c0")
     ) %>%
@@ -209,7 +209,7 @@ plot_scatter_animated <- function(data,
       xref = "paper",
       y = -0.6,
       yref = "paper",
-      showarrow = F
+      showarrow = FALSE
     ) %>%
     plotly::add_annotations(
       text = "0% net deviation from scenario",
@@ -220,7 +220,7 @@ plot_scatter_animated <- function(data,
       y = 0.43,
       yanchor = "top",
       yref = "paper",
-      showarrow = F,
+      showarrow = FALSE,
       font = list(color = "#ffffff"),
       textangle = 45
     ) %>%
@@ -261,7 +261,7 @@ plot_scatter_animated <- function(data,
         tickformat = ",.0%"
       ),
       plot_bgcolor = "#6c6c6c",
-      autosize = F,
+      autosize = FALSE,
       margin = list(l = 0, r = 0, t = 170, b = 250),
       shapes = list(
         list(
