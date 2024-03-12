@@ -27,6 +27,7 @@
 #'
 #' @examples
 #' # TODO
+# nolint start: cyclocomp_linter.
 plot_scatter <- function(data,
                          sector = NULL,
                          scenario_source = NULL,
@@ -209,6 +210,7 @@ plot_scatter <- function(data,
 
   p
 }
+# nolint end
 
 check_plot_scatter <- function(data, alignment_limit, cap_outliers, floor_outliers) {
   r2dii.plot:::abort_if_missing_names(data, c(
