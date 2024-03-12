@@ -126,6 +126,8 @@ abort_if_middle_node_column_not_found <- function(data, name, env = parent.frame
 }
 
 # Backport `base::deparse1()` to R < 4.0.0
+# nolint start: object_name_linter.
 deparse_1 <- function(expr, collapse = " ", width.cutoff = 500L, ...) {
   paste(deparse(expr, width.cutoff, ...), collapse = collapse)
 }
+# nolint end
