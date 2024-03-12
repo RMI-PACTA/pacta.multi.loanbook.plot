@@ -16,14 +16,11 @@
 #'
 #' @examples
 #' # TODO
-plot_sankey <- function(
-    data,
-    capitalise_node_labels = TRUE,
-    save_png_to = NULL,
-    png_name = "sankey.png",
-    nodes_order_from_data = FALSE
-    ) {
-
+plot_sankey <- function(data,
+                        capitalise_node_labels = TRUE,
+                        save_png_to = NULL,
+                        png_name = "sankey.png",
+                        nodes_order_from_data = FALSE) {
   check_plot_sankey(data, capitalise_node_labels)
 
   if (capitalise_node_labels) {
@@ -33,11 +30,11 @@ plot_sankey <- function(
         middle_node = r2dii.plot::to_title(.data$middle_node)
       )
     if ("middle_node2" %in% names(data_links)) {
-    data_links <- data_links %>%
-      dplyr::mutate(
-        middle_node2 = r2dii.plot::to_title(.data$middle_node2)
-      )
-      }
+      data_links <- data_links %>%
+        dplyr::mutate(
+          middle_node2 = r2dii.plot::to_title(.data$middle_node2)
+        )
+    }
   } else {
     data_links <- data
   }
@@ -71,16 +68,16 @@ plot_sankey <- function(
 
     links <- dplyr::bind_rows(links_1, links_2, links_3)
   } else {
-   links_2 <- data_links %>%
-     dplyr::select(
-       "group_id",
-       source = "middle_node",
-       target = "is_aligned",
-       value = "loan_size_outstanding",
-       group = "is_aligned"
-     )
+    links_2 <- data_links %>%
+      dplyr::select(
+        "group_id",
+        source = "middle_node",
+        target = "is_aligned",
+        value = "loan_size_outstanding",
+        group = "is_aligned"
+      )
 
-   links <- dplyr::bind_rows(links_1, links_2)
+    links <- dplyr::bind_rows(links_1, links_2)
   }
 
   links <- links %>%
@@ -103,13 +100,13 @@ plot_sankey <- function(
 
   my_color <- 'd3.scaleOrdinal() .domain(["Not aligned", "Aligned", "Unknown", "other"]) .range(["#e10000","#3d8c40", "#808080", "#808080"])'
 
-  links$IDsource <- match(links$source, nodes$name)-1
-  links$IDtarget <- match(links$target, nodes$name)-1
+  links$IDsource <- match(links$source, nodes$name) - 1
+  links$IDtarget <- match(links$target, nodes$name) - 1
 
   if (nodes_order_from_data) {
     n_iter <- 0
   } else {
-    n_iter <- 32 #sankeyNetwork() default
+    n_iter <- 32 # sankeyNetwork() default
   }
 
   p <- networkD3::sankeyNetwork(
@@ -119,9 +116,9 @@ plot_sankey <- function(
     Target = "IDtarget",
     Value = "value",
     NodeID = "name",
-    colourScale=my_color,
-    LinkGroup="group",
-    NodeGroup="group",
+    colourScale = my_color,
+    LinkGroup = "group",
+    NodeGroup = "group",
     fontSize = 14,
     iterations = n_iter
   )

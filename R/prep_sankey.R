@@ -17,14 +17,12 @@
 #'
 #' @examples
 #' # TODO
-prep_sankey <- function(
-    data_alignment,
-    matched_loanbook,
-    region,
-    year,
-    middle_node,
-    middle_node2 = NULL) {
-
+prep_sankey <- function(data_alignment,
+                        matched_loanbook,
+                        region,
+                        year,
+                        middle_node,
+                        middle_node2 = NULL) {
   check_prep_sankey(
     data_alignment,
     matched_loanbook,
@@ -32,13 +30,13 @@ prep_sankey <- function(
     year,
     middle_node,
     middle_node2
-    )
+  )
 
   data_alignment <- data_alignment %>%
     dplyr::filter(
       .data$region == .env$region,
       .data$year == .env$year
-      )
+    )
 
   matched_loanbook <- matched_loanbook %>%
     dplyr::select("group_id", "name_abcd", "sector", "loan_size_outstanding")
@@ -49,7 +47,7 @@ prep_sankey <- function(
       dplyr::mutate(
         is_aligned = dplyr::case_when(
           alignment_metric >= 0 ~ "Aligned",
-          alignment_metric <0 ~ "Not aligned",
+          alignment_metric < 0 ~ "Not aligned",
           TRUE ~ "Unknown"
         ),
         middle_node = !!rlang::sym(middle_node)
@@ -65,7 +63,7 @@ prep_sankey <- function(
       dplyr::mutate(
         is_aligned = dplyr::case_when(
           alignment_metric >= 0 ~ "Aligned",
-          alignment_metric <0 ~ "Not aligned",
+          alignment_metric < 0 ~ "Not aligned",
           TRUE ~ "Unknown"
         ),
         middle_node = !!rlang::sym(middle_node),
@@ -80,14 +78,12 @@ prep_sankey <- function(
   data_out
 }
 
-check_prep_sankey <- function(
-    data_alignment,
-    matched_loanbook,
-    region,
-    year,
-    middle_node,
-    middle_node2
-) {
+check_prep_sankey <- function(data_alignment,
+                              matched_loanbook,
+                              region,
+                              year,
+                              middle_node,
+                              middle_node2) {
   names_all <- c("group_id", "name_abcd", "sector")
   names_aggergate <- c("region", "year")
   r2dii.plot:::abort_if_missing_names(data_alignment, c(names_all, names_aggergate))
@@ -97,7 +93,7 @@ check_prep_sankey <- function(
       "`region_tms` value not found in `data_alignment` dataset.",
       i = glue::glue("Regions in `data_alignment` are: {toString(unique(data_alignment$region))}"),
       x = glue::glue("You provided region = {region}.")
-      ))
+    ))
   }
   if (!(year %in% unique(data_alignment$year))) {
     rlang::abort(c(
@@ -105,9 +101,9 @@ check_prep_sankey <- function(
       i = glue::glue(
         "Years in `data_alignment` are: {toString(unique(data_alignment$year))}
         "
-        ),
+      ),
       x = glue::glue("You provided year = {year}.")
-      ))
+    ))
   }
   abort_if_middle_node_column_not_found(data_alignment, middle_node, env = list(data = substitute(data_alignment)))
   if (!is.null(middle_node2)) {
@@ -123,9 +119,9 @@ abort_if_middle_node_column_not_found <- function(data, name, env = parent.frame
       glue::glue("Column name you passed as one of the middle nodes not found in {.data}."),
       i = glue::glue(
         "Column names in `{.data}` are: {toString(names(data))}"
-        ),
+      ),
       x = glue::glue("You asked to use column named: `{name}`.")
-      ))
+    ))
   }
 }
 

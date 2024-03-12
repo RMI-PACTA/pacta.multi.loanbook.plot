@@ -18,18 +18,15 @@
 #' @export
 #'
 #' @examples
-#' #TODO
-plot_timeline <- function(
-    data,
-    sector = NULL,
-    scenario_source = NULL,
-    scenario = NULL,
-    region = NULL,
-    title = NULL,
-    subtitle = NULL,
-    alignment_limits = NULL
-    ) {
-
+#' # TODO
+plot_timeline <- function(data,
+                          sector = NULL,
+                          scenario_source = NULL,
+                          scenario = NULL,
+                          region = NULL,
+                          title = NULL,
+                          subtitle = NULL,
+                          alignment_limits = NULL) {
   caption <- ""
   if (!is.null(scenario_source) | !is.null(scenario) | !is.null(region)) {
     if (!is.null(scenario)) {
@@ -38,7 +35,7 @@ plot_timeline <- function(
     if (!is.null(scenario_source)) {
       caption <- glue::glue("{caption}Scenario source: {beautify_scenario_label(scenario_source)}\n", .trim = FALSE)
     }
-    if(!is.null(region)) {
+    if (!is.null(region)) {
       caption <- glue::glue("{caption}Region: {r2dii.plot::to_title(region)}", .trim = FALSE)
     }
   } else {
@@ -69,13 +66,13 @@ plot_timeline <- function(
   check_timeline(data, alignment_limits)
 
   p <- ggplot2::ggplot(
-      data,
-      ggplot2::aes(
-        x = .data$year,
-        y = .data$exposure_weighted_net_alignment,
-        colour = .data$exposure_weighted_net_alignment
-      )
-    ) +
+    data,
+    ggplot2::aes(
+      x = .data$year,
+      y = .data$exposure_weighted_net_alignment,
+      colour = .data$exposure_weighted_net_alignment
+    )
+  ) +
     ggplot2::geom_hline(yintercept = 0, colour = "white") +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
@@ -83,7 +80,7 @@ plot_timeline <- function(
     ggplot2::scale_y_continuous(
       name = "Exposure-weighted deviation from scenario value",
       labels = scales::percent
-      ) +
+    ) +
     ggplot2::scale_colour_gradient2(
       low = "#e10000",
       mid = "white",
@@ -92,7 +89,7 @@ plot_timeline <- function(
       limits = alignment_limits,
       labels = scales::percent
     ) +
-    ggplot2::facet_grid(group_id~direction, labeller = ggplot2::as_labeller(format_facet_labels)) +
+    ggplot2::facet_grid(group_id ~ direction, labeller = ggplot2::as_labeller(format_facet_labels)) +
     r2dii.plot::theme_2dii() +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "#6c6c6c")
@@ -106,9 +103,11 @@ plot_timeline <- function(
 }
 
 check_timeline <- function(data, alignment_limits) {
-  r2dii.plot:::abort_if_missing_names(data, c("direction", "year",
-   "exposure_weighted_net_alignment", "group_id"))
-  if ((length(alignment_limits) != 2) | (!is.numeric(alignment_limits))){
+  r2dii.plot:::abort_if_missing_names(data, c(
+    "direction", "year",
+    "exposure_weighted_net_alignment", "group_id"
+  ))
+  if ((length(alignment_limits) != 2) | (!is.numeric(alignment_limits))) {
     rlang::abort("'alignment_limits' must be a numeric vector of size 2.")
   }
 }
