@@ -24,5 +24,3 @@ jobs:
           {"os": "ubuntu-latest", "r": "oldrel-3"},
           {"os": "ubuntu-latest", "r": "oldrel-4"}
         ]
-
-
