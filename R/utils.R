@@ -5,9 +5,11 @@ beautify_scenario_label <- function(label) {
 }
 
 # Backport `base::deparse1()` to R < 4.0.0
+# nolint start: object_name_linter.
 deparse_1 <- function(expr, collapse = " ", width.cutoff = 500L, ...) {
   paste(deparse(expr, width.cutoff, ...), collapse = collapse)
 }
+# nolint end
 
 #' Check if a named object contains expected names
 #'
