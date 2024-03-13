@@ -25,6 +25,9 @@
     <loc>/reference/plot_scatter.html</loc>
   </url>
   <url>
+    <loc>/reference/plot_scatter_alignment_exposure.html</loc>
+  </url>
+  <url>
     <loc>/reference/plot_scatter_animated.html</loc>
   </url>
   <url>
@@ -35,6 +38,9 @@
   </url>
   <url>
     <loc>/reference/prep_scatter.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_scatter_alignment_exposure.html</loc>
   </url>
   <url>
     <loc>/reference/prep_scatter_animated.html</loc>
