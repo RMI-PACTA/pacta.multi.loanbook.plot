@@ -18,4 +18,28 @@
   <url>
     <loc>/reference/index.html</loc>
   </url>
+  <url>
+    <loc>/reference/plot_sankey.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_scatter.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_scatter_animated.html</loc>
+  </url>
+  <url>
+    <loc>/reference/plot_timeline.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_sankey.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_scatter.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_scatter_animated.html</loc>
+  </url>
+  <url>
+    <loc>/reference/prep_timeline.html</loc>
+  </url>
 </urlset>
