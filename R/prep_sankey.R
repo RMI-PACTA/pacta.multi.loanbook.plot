@@ -86,8 +86,8 @@ check_prep_sankey <- function(data_alignment,
                               middle_node2) {
   names_all <- c("group_id", "name_abcd", "sector")
   names_aggergate <- c("region", "year")
-  r2dii.plot:::abort_if_missing_names(data_alignment, c(names_all, names_aggergate))
-  r2dii.plot:::abort_if_missing_names(matched_loanbook, c(names_all, "loan_size_outstanding"))
+  abort_if_missing_names(data_alignment, c(names_all, names_aggergate))
+  abort_if_missing_names(matched_loanbook, c(names_all, "loan_size_outstanding"))
   if (!(region %in% unique(data_alignment$region))) {
     rlang::abort(c(
       "`region_tms` value not found in `data_alignment` dataset.",

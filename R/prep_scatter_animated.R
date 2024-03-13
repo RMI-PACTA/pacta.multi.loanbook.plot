@@ -73,11 +73,11 @@ check_prep_scatter_animated <- function(data,
                                         group_ids_to_plot,
                                         name_col,
                                         value_col) {
-  r2dii.plot:::abort_if_missing_names(data, c(
+  abort_if_missing_names(data, c(
     "group_id", "year",
     "sector", "region", "direction", name_col, value_col
   ))
-  r2dii.plot:::abort_if_unknown_values(sector, data, "sector")
-  r2dii.plot:::abort_if_unknown_values(region, data, "region")
-  r2dii.plot:::abort_if_unknown_values(group_ids_to_plot, data, "group_id")
+  abort_if_unknown_values(sector, data, "sector")
+  abort_if_unknown_values(region, data, "region")
+  abort_if_unknown_values(group_ids_to_plot, data, "group_id")
 }

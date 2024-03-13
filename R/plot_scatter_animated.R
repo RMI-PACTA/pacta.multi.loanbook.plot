@@ -288,7 +288,7 @@ check_plot_scatter_animated <- function(data,
                                         alignment_limit,
                                         cap_outliers,
                                         floor_outliers) {
-  r2dii.plot:::abort_if_missing_names(data, c(
+  abort_if_missing_names(data, c(
     "name", "buildout",
     "phaseout", "net", "year"
   ))
