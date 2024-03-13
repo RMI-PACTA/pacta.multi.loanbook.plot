@@ -213,7 +213,7 @@ plot_scatter <- function(data,
 # nolint end
 
 check_plot_scatter <- function(data, alignment_limit, cap_outliers, floor_outliers) {
-  r2dii.plot:::abort_if_missing_names(data, c(
+  abort_if_missing_names(data, c(
     "name", "buildout",
     "phaseout", "net"
   ))

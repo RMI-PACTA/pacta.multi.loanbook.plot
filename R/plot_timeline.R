@@ -103,7 +103,7 @@ plot_timeline <- function(data,
 }
 
 check_timeline <- function(data, alignment_limits) {
-  r2dii.plot:::abort_if_missing_names(data, c(
+  abort_if_missing_names(data, c(
     "direction", "year",
     "exposure_weighted_net_alignment", "group_id"
   ))
