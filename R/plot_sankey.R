@@ -147,7 +147,7 @@ plot_sankey <- function(data,
 
 check_plot_sankey <- function(data, capitalise_node_labels) {
   crucial_names <- c("group_id", "middle_node", "is_aligned", "loan_size_outstanding")
-  r2dii.plot:::abort_if_missing_names(data, crucial_names)
+  abort_if_missing_names(data, crucial_names)
   if (!is.logical(capitalise_node_labels)) {
     rlang::abort(
       c(
