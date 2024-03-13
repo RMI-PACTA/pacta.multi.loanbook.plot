@@ -1,14 +1,42 @@
 Package: pacta.multi.loanbook.plot
-Title: What the Package Does (One Line, Title Case)
+Title: Tools to Visualize Climate Metrics for Multiple Loanbooks
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    c(person(given = "Monika",
+             family = "Furdyna",
+             role = c("aut", "cre"),
+             email = "monika.furdyna@gmail.com",
+             comment = c(ORCID = "0000-0002-3728-0646")),
+      person(given = "Jacob",
+             family = "Kastl",
+             role = c("aut", "ctb"),
+             email = "jacob.kastl@gmail.com"),
+      person(given = "RMI",
+             role = c("cph", "fnd"),
+             email = "PACTA4banks@rmi.org"))
+Description: This is an experimental package that contains functions to help
+    plot aggregated PACTA results, with a focus on making it easy to navigate
+    and understand results across a large number of banks and loan books.
 License: MIT + file LICENSE
+URL: https://github.com/RMI-PACTA/pacta.multi.loanbook.plot
+BugReports: https://github.com/RMI-PACTA/pacta.multi.loanbook.plot/issues
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Imports: 
+    dplyr,
+    ggplot2,
+    glue,
+    magrittr,
+    networkD3,
+    plotly,
+    r2dii.plot,
+    rlang,
+    scales,
+    tidyr,
+    webshot
