@@ -2,10 +2,12 @@
 
 export(plot_sankey)
 export(plot_scatter)
+export(plot_scatter_alignment_exposure)
 export(plot_scatter_animated)
 export(plot_timeline)
 export(prep_sankey)
 export(prep_scatter)
+export(prep_scatter_alignment_exposure)
 export(prep_scatter_animated)
 export(prep_timeline)
 importFrom(magrittr,"%>%")
