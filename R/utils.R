@@ -50,7 +50,6 @@ abort_if_unknown_values <- function(value, data, column) {
 
   .value <- deparse_1(substitute(value))
   .data <- deparse_1(substitute(data))
-  .column <- deparse_1(substitute(column))
 
   valid <- unique(data[[column]])
   if (!all(value %in% valid)) {
