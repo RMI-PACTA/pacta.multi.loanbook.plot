@@ -10,14 +10,14 @@ prep_scatter_alignment_exposure(
   region,
   scenario,
   category,
-  exclude_group_ids = "benchmark"
+  exclude_groups = "benchmark"
 )
 }
 \arguments{
 \item{data}{data.frame. Holds net aggregated alignment metrics on the loan
-book level. Must contain columns: \code{group_id}, \code{scenario}, \code{region},
-\code{sector}, \code{year}, \code{exposure_weighted_net_alignment},
-\code{sum_loan_size_outstanding}.}
+book level. Must contain columns: \code{"scenario"}, \code{"region"},
+\code{"sector"}, \code{"year"}, \code{"exposure_weighted_net_alignment"},
+\code{"sum_loan_size_outstanding"} and any column implied by \code{category}}
 
 \item{year}{Integer. Year on which \code{data} should be filtered.}
 
@@ -25,12 +25,10 @@ book level. Must contain columns: \code{group_id}, \code{scenario}, \code{region
 
 \item{scenario}{Character. Scenario to filter \code{data} data frame on.}
 
-\item{category}{Character. Character specifying the variable that contains
-the groups by which to analyse the loan books. Usually this will be
-\code{"group_id"} unless there is a clearly specified reason to use another
-category.}
+\item{category}{Character. Vector of length 1. A column to group by. Must be
+available variables in \code{data}.}
 
-\item{exclude_group_ids}{Character. Character specifying any values from
+\item{exclude_groups}{Character. Character specifying any values from
 \code{category} that should not be included in the analysis. This is useful to
 remove benchmarks that are not meant to be compared at the same level.
 Defaults to \code{"benchmark"}.}

@@ -25,9 +25,7 @@ values in the data. Values bigger than cap are plotted on the border of the
 plot.}
 
 \item{category}{Character. Character specifying the variable that contains
-the groups by which to analyse the loan books. Usually this will be
-\code{"group_id"} unless there is a clearly specified reason to use another
-category.}
+the groups by which to analyse the loan books.}
 
 \item{currency}{Character. Currency to display in the plot labels.}
 }

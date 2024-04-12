@@ -9,9 +9,7 @@
 #'   values in the data. Values bigger than cap are plotted on the border of the
 #'   plot.
 #' @param category Character. Character specifying the variable that contains
-#'   the groups by which to analyse the loan books. Usually this will be
-#'   `"group_id"` unless there is a clearly specified reason to use another
-#'   category.
+#'   the groups by which to analyse the loan books.
 #' @param currency Character. Currency to display in the plot labels.
 #'
 #' @return object of type "ggplot"
