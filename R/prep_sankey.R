@@ -3,8 +3,6 @@
 #' @param data_alignment data.frame. Holds aggregated alignment metrics per
 #'   company for tms sectors. Must contain columns: `group_id`, `name_abcd`,
 #'   `sector`.
-#' @param matched_loanbook data.frame. Holds the matched loan books of a set of
-#'   groups. Must include a column `group_id` and `loan_size_outstanding`.
 #' @param region Character. Region to filter `data_alignment` data frame on.
 #' @param year Integer. Year on which `data_alignment` should be filtered.
 #' @param middle_node Character. Column specifying the middle nodes to be
@@ -18,14 +16,12 @@
 #' @examples
 #' # TODO
 prep_sankey <- function(data_alignment,
-                        matched_loanbook,
                         region,
                         year,
                         middle_node,
                         middle_node2 = NULL) {
   check_prep_sankey(
     data_alignment,
-    matched_loanbook,
     region,
     year,
     middle_node,
@@ -38,12 +34,8 @@ prep_sankey <- function(data_alignment,
       .data$year == .env$year
     )
 
-  matched_loanbook <- matched_loanbook %>%
-    dplyr::select("group_id", "name_abcd", "sector", "loan_size_outstanding")
-
   if (is.null(middle_node2)) {
     data_out <- data_alignment %>%
-      dplyr::inner_join(matched_loanbook, by = c("group_id", "name_abcd", "sector")) %>%
       dplyr::mutate(
         is_aligned = dplyr::case_when(
           alignment_metric >= 0 ~ "Aligned",
@@ -59,7 +51,6 @@ prep_sankey <- function(data_alignment,
       dplyr::arrange(.data$group_id, .data$is_aligned)
   } else {
     data_out <- data_alignment %>%
-      dplyr::inner_join(matched_loanbook, by = c("group_id", "name_abcd", "sector")) %>%
       dplyr::mutate(
         is_aligned = dplyr::case_when(
           alignment_metric >= 0 ~ "Aligned",
@@ -79,7 +70,6 @@ prep_sankey <- function(data_alignment,
 }
 
 check_prep_sankey <- function(data_alignment,
-                              matched_loanbook,
                               region,
                               year,
                               middle_node,
@@ -87,7 +77,6 @@ check_prep_sankey <- function(data_alignment,
   names_all <- c("group_id", "name_abcd", "sector")
   names_aggergate <- c("region", "year")
   abort_if_missing_names(data_alignment, c(names_all, names_aggergate))
-  abort_if_missing_names(matched_loanbook, c(names_all, "loan_size_outstanding"))
   if (!(region %in% unique(data_alignment$region))) {
     rlang::abort(c(
       "`region_tms` value not found in `data_alignment` dataset.",

@@ -4,22 +4,12 @@
 \alias{prep_sankey}
 \title{Prepare data to plot using \code{plot_sankey()}}
 \usage{
-prep_sankey(
-  data_alignment,
-  matched_loanbook,
-  region,
-  year,
-  middle_node,
-  middle_node2 = NULL
-)
+prep_sankey(data_alignment, region, year, middle_node, middle_node2 = NULL)
 }
 \arguments{
 \item{data_alignment}{data.frame. Holds aggregated alignment metrics per
 company for tms sectors. Must contain columns: \code{group_id}, \code{name_abcd},
 \code{sector}.}
-
-\item{matched_loanbook}{data.frame. Holds the matched loan books of a set of
-groups. Must include a column \code{group_id} and \code{loan_size_outstanding}.}
 
 \item{region}{Character. Region to filter \code{data_alignment} data frame on.}
 
