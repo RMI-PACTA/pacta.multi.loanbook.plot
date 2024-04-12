@@ -11,19 +11,20 @@ prep_scatter(
   year,
   sector,
   region,
-  group_ids_to_plot = NULL
+  by_group,
+  groups_to_plot = NULL
 )
 }
 \arguments{
 \item{data_bopo}{data.frame. Data containing buildout and phaseout alignment
-values. Must contain columns: 'group_id', 'year', 'sector', 'region',
-'direction' and either 'name_abcd' and 'alignment_metric' or
-'exposure_weighted_net_alignment'.}
+values. Must contain columns: \code{by_group}, \code{'year'}, \code{'sector'}, \code{'region'},
+\code{'direction'} and either \code{'name_abcd'} and \code{'alignment_metric'} or
+\code{'exposure_weighted_net_alignment'}.}
 
 \item{data_net}{data.frame. Data containing net alignment values. Must
-contain columns: 'group_id', 'year', 'sector', 'region', 'direction' and
-either 'name_abcd' and 'alignment_metric' or
-'exposure_weighted_net_alignment'.}
+contain columns: \code{by_group}, \code{'year'}, \code{'sector'}, \code{'region'},
+\code{'direction'} and either \code{'name_abcd'} and \code{'alignment_metric'} or
+\code{'exposure_weighted_net_alignment'}.}
 
 \item{data_level}{Character. Level of the plotted data. Can be 'bank' or
 'company'.}
@@ -34,7 +35,9 @@ either 'name_abcd' and 'alignment_metric' or
 
 \item{region}{Character. Region to filter data on.}
 
-\item{group_ids_to_plot}{Character vector. Bank ids to filter on.}
+\item{by_group}{Character. Vector of length 1. Variable to group by.}
+
+\item{groups_to_plot}{Character vector. Bank ids to filter on.}
 }
 \value{
 data.frame

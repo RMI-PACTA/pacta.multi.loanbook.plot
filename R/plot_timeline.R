@@ -2,12 +2,13 @@
 #'
 #' @param data data.frame Should have the same format as output of
 #'   `prep_timeline()` and contain columns: 'direction', 'year',
-#'   'exposure_weighted_net_alignment', 'group_id'.
+#'   'exposure_weighted_net_alignment', by_group.
 #' @param sector Character. Sector name to be used in the plot title.
 #' @param scenario_source Character. Scenario source to be used in the plot
 #'   caption.
 #' @param scenario Character. Scenario name to be used in the plot caption.
 #' @param region Character. Region to be used in the plot caption.
+#' @param by_group Character. Vector of length 1. Variable to group by.
 #' @param title Character. Custom title if different than default.
 #' @param subtitle Character. Custom subtitle if different than default.
 #' @param alignment_limits Numeric vector of size 2. Limits to be applied to
@@ -24,6 +25,7 @@ plot_timeline <- function(data,
                           scenario_source = NULL,
                           scenario = NULL,
                           region = NULL,
+                          by_group = NULL,
                           title = NULL,
                           subtitle = NULL,
                           alignment_limits = NULL) {
@@ -63,7 +65,7 @@ plot_timeline <- function(data,
     alignment_limits <- c(-max_value, max_value)
   }
 
-  check_timeline(data, alignment_limits)
+  check_timeline(data, alignment_limits, by_group)
 
   p <- ggplot2::ggplot(
     data,
@@ -89,7 +91,11 @@ plot_timeline <- function(data,
       limits = alignment_limits,
       labels = scales::percent
     ) +
-    ggplot2::facet_grid(group_id ~ direction, labeller = ggplot2::as_labeller(format_facet_labels)) +
+    ggplot2::facet_grid(
+      rows = ggplot2::vars(!!rlang::sym(by_group)),
+      cols = ggplot2::vars(.data$direction),
+      labeller = ggplot2::as_labeller(format_facet_labels)
+    ) +
     r2dii.plot::theme_2dii() +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "#6c6c6c")
@@ -102,11 +108,16 @@ plot_timeline <- function(data,
   p
 }
 
-check_timeline <- function(data, alignment_limits) {
-  abort_if_missing_names(data, c(
-    "direction", "year",
-    "exposure_weighted_net_alignment", "group_id"
-  ))
+check_timeline <- function(data, alignment_limits, by_group) {
+  abort_if_missing_names(
+    data,
+    c(
+      "direction",
+      "year",
+      "exposure_weighted_net_alignment",
+      by_group
+    )
+  )
   if ((length(alignment_limits) != 2) || (!is.numeric(alignment_limits))) {
     rlang::abort("'alignment_limits' must be a numeric vector of size 2.")
   }
