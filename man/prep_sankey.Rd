@@ -4,16 +4,25 @@
 \alias{prep_sankey}
 \title{Prepare data to plot using \code{plot_sankey()}}
 \usage{
-prep_sankey(data_alignment, region, year, middle_node, middle_node2 = NULL)
+prep_sankey(
+  data_alignment,
+  region,
+  year,
+  by_group,
+  middle_node,
+  middle_node2 = NULL
+)
 }
 \arguments{
 \item{data_alignment}{data.frame. Holds aggregated alignment metrics per
-company for tms sectors. Must contain columns: \code{group_id}, \code{name_abcd},
+company for tms sectors. Must contain columns: \code{by_group}, \code{name_abcd},
 \code{sector}.}
 
 \item{region}{Character. Region to filter \code{data_alignment} data frame on.}
 
 \item{year}{Integer. Year on which \code{data_alignment} should be filtered.}
+
+\item{by_group}{Character. Vector of length 1. Variable to group by.}
 
 \item{middle_node}{Character. Column specifying the middle nodes to be
 plotted in sankey plot. Must be present in \code{data_alignment}.}

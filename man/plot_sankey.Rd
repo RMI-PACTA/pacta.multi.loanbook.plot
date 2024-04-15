@@ -6,6 +6,7 @@
 \usage{
 plot_sankey(
   data,
+  by_group,
   capitalise_node_labels = TRUE,
   save_png_to = NULL,
   png_name = "sankey.png",
@@ -15,6 +16,8 @@ plot_sankey(
 \arguments{
 \item{data}{data.frame. Should have the same format as output of
 \code{prep_sankey()}}
+
+\item{by_group}{Character. Vector of length 1. Variable to group by.}
 
 \item{capitalise_node_labels}{Logical. Flag indicating if node labels should
 be converted into better looking capitalised form.}
