@@ -65,6 +65,19 @@ plot_timeline <- function(data,
     alignment_limits <- c(-max_value, max_value)
   }
 
+  if (!is.null(by_group)) {
+    if (!inherits(by_group, "character")) {
+      stop("by_group must be of class character")
+    }
+    if (!length(by_group) == 1) {
+      stop("by_group must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    by_group <- "aggregate_loan_book"
+  }
+
   check_timeline(data, alignment_limits, by_group)
 
   p <- ggplot2::ggplot(

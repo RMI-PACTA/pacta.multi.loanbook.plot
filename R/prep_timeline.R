@@ -12,7 +12,24 @@
 #'
 #' @examples
 #' # TODO
-prep_timeline <- function(data, sector, region, by_group, groups_to_plot) {
+prep_timeline <- function(data,
+                          sector,
+                          region,
+                          by_group,
+                          groups_to_plot) {
+  if (!is.null(by_group)) {
+    if (!inherits(by_group, "character")) {
+      stop("by_group must be of class character")
+    }
+    if (!length(by_group) == 1) {
+      stop("by_group must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    by_group <- "aggregate_loan_book"
+  }
+
   check_prep_timeline(data, sector, region, by_group, groups_to_plot)
 
   data_timeline <- data %>%

@@ -29,6 +29,10 @@ prep_sankey <- function(data_alignment,
     if (!length(by_group) == 1) {
       stop("by_group must be of length 1")
     }
+  } else {
+    data_alignment <- data_alignment %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    by_group <- "aggregate_loan_book"
   }
 
   check_prep_sankey(

@@ -22,6 +22,19 @@ plot_scatter_alignment_exposure <- function(data,
                                             cap_outliers,
                                             category,
                                             currency) {
+  if (!is.null(category)) {
+    if (!inherits(category, "character")) {
+      stop("category must be of class character")
+    }
+    if (!length(category) == 1) {
+      stop("category must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    category <- "aggregate_loan_book"
+  }
+
   if (!is.null(floor_outliers)) {
     data <- data %>%
       dplyr::mutate(

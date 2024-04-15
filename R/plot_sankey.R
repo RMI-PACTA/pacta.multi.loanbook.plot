@@ -23,6 +23,19 @@ plot_sankey <- function(data,
                         save_png_to = NULL,
                         png_name = "sankey.png",
                         nodes_order_from_data = FALSE) {
+  if (!is.null(by_group)) {
+    if (!inherits(by_group, "character")) {
+      stop("by_group must be of class character")
+    }
+    if (!length(by_group) == 1) {
+      stop("by_group must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    by_group <- "aggregate_loan_book"
+  }
+
   check_plot_sankey(
     data = data,
     by_group = by_group,

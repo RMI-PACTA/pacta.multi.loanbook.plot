@@ -25,6 +25,19 @@ prep_scatter_alignment_exposure <- function(data,
                                             scenario,
                                             category,
                                             exclude_groups = "benchmark") {
+  if (!is.null(category)) {
+    if (!inherits(category, "character")) {
+      stop("category must be of class character")
+    }
+    if (!length(category) == 1) {
+      stop("category must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    category <- "aggregate_loan_book"
+  }
+
   data <- data %>%
     dplyr::filter(
       !grepl(paste0(.env$exclude_groups, collapse = "|"), !!rlang::sym(category))

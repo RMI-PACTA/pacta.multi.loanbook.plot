@@ -35,6 +35,12 @@ prep_scatter_animated <- function(data_bopo,
     if (!length(by_group) == 1) {
       stop("by_group must be of length 1")
     }
+  } else {
+    data_bopo <- data_bopo %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    data_net <- data_net %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    by_group <- "aggregate_loan_book"
   }
 
   if (data_level == "bank") {
