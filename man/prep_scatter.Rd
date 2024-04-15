@@ -26,8 +26,8 @@ contain columns: \code{by_group}, \code{'year'}, \code{'sector'}, \code{'region'
 \code{'direction'} and either \code{'name_abcd'} and \code{'alignment_metric'} or
 \code{'exposure_weighted_net_alignment'}.}
 
-\item{data_level}{Character. Level of the plotted data. Can be 'bank' or
-'company'.}
+\item{data_level}{Character. Level of the plotted data. Can be \code{'bank'} or
+\code{'company'}.}
 
 \item{year}{Integer. Year on which the data should be filtered.}
 

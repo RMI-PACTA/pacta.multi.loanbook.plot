@@ -1,17 +1,18 @@
 #' Prepare data to plot animated scatterplot
 #'
 #' @param data_bopo data.frame. Data containing buildout and phaseout alignment
-#'   values. Must contain columns: 'group_id', 'year', 'sector', 'region',
-#'   'direction' and either 'name_abcd' and 'alignment_metric' or
-#'   'exposure_weighted_net_alignment'.
+#'   values. Must contain columns: `by_group`, `'year'`, `'sector'`, `'region'`,
+#'   `'direction'` and either `'name_abcd'` and `'alignment_metric'` or
+#'   `'exposure_weighted_net_alignment'`.
 #' @param data_net data.frame. Data containing net alignment values. Must
-#'   contain columns: 'group_id', 'year', 'sector', 'region', 'direction' and
-#'   either 'name_abcd' and 'alignment_metric' or 'exposure_weighted_net_alignment'.
-#' @param data_level Character. Level of the plotted data. Can be 'bank' or
-#'   'company'.
+#'   contain columns: `by_group`, `'year'`, `'sector'`, `'region'`, `'direction'` and
+#'   either `'name_abcd'` and `'alignment_metric'` or `'exposure_weighted_net_alignment'`.
+#' @param data_level Character. Level of the plotted data. Can be `'bank'` or
+#'   `'company'`.
 #' @param sector Character. Sector to filter data on.
 #' @param region Character. Region to filter data on.
-#' @param group_ids_to_plot Character vector. Group ids to filter on.
+#' @param by_group Character. Vector of length 1. Variable to group by.
+#' @param groups_to_plot Character vector. Group ids to filter on.
 #'
 #' @return data.frame
 #' @export
@@ -23,22 +24,37 @@ prep_scatter_animated <- function(data_bopo,
                                   data_level = c("bank", "company"),
                                   sector,
                                   region,
-                                  group_ids_to_plot = NULL) {
+                                  by_group,
+                                  groups_to_plot = NULL) {
   rlang::arg_match(data_level)
 
+  if (!is.null(by_group)) {
+    if (!inherits(by_group, "character")) {
+      stop("by_group must be of class character")
+    }
+    if (!length(by_group) == 1) {
+      stop("by_group must be of length 1")
+    }
+  }
+
   if (data_level == "bank") {
-    name_col <- "group_id"
+    name_col <- by_group
     value_col <- "exposure_weighted_net_alignment"
   } else {
     name_col <- "name_abcd"
     value_col <- "alignment_metric"
   }
 
-  check_prep_scatter_animated(data_bopo, sector, region, group_ids_to_plot, name_col, value_col)
-  check_prep_scatter_animated(data_net, sector, region, group_ids_to_plot, name_col, value_col)
+  check_prep_scatter_animated(data_bopo, sector, region, by_group, groups_to_plot, name_col, value_col)
+  check_prep_scatter_animated(data_net, sector, region, by_group, groups_to_plot, name_col, value_col)
 
-  if (is.null(group_ids_to_plot)) {
-    group_ids_to_plot <- unique(c(data_bopo$group_id, data_net$group_id))
+  if (is.null(groups_to_plot)) {
+    groups_to_plot <- unique(
+      c(
+        dplyr::pull(data_bopo, by_group),
+        dplyr::pull(data_net, by_group)
+      )
+    )
   }
 
   data_scatter <- data_bopo %>%
@@ -46,7 +62,7 @@ prep_scatter_animated <- function(data_bopo,
     dplyr::filter(
       .data$sector == .env$sector,
       .data$region == .env$region,
-      .data$group_id %in% group_ids_to_plot
+      !!rlang::sym(by_group) %in% groups_to_plot
     ) %>%
     dplyr::select("name" = name_col, "direction", "year", "value" = value_col) %>%
     dplyr::distinct() %>%
@@ -70,14 +86,23 @@ prep_scatter_animated <- function(data_bopo,
 check_prep_scatter_animated <- function(data,
                                         sector,
                                         region,
-                                        group_ids_to_plot,
+                                        by_group,
+                                        groups_to_plot,
                                         name_col,
                                         value_col) {
-  abort_if_missing_names(data, c(
-    "group_id", "year",
-    "sector", "region", "direction", name_col, value_col
-  ))
+  abort_if_missing_names(
+    data,
+    c(
+      by_group,
+      "year",
+      "sector",
+      "region",
+      "direction",
+      name_col,
+      value_col
+    )
+  )
   abort_if_unknown_values(sector, data, "sector")
   abort_if_unknown_values(region, data, "region")
-  abort_if_unknown_values(group_ids_to_plot, data, "group_id")
+  abort_if_unknown_values(groups_to_plot, data, by_group)
 }

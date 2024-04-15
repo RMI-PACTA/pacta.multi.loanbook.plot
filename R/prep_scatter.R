@@ -8,8 +8,8 @@
 #'   contain columns: `by_group`, `'year'`, `'sector'`, `'region'`,
 #'   `'direction'` and either `'name_abcd'` and `'alignment_metric'` or
 #'   `'exposure_weighted_net_alignment'`.
-#' @param data_level Character. Level of the plotted data. Can be 'bank' or
-#'   'company'.
+#' @param data_level Character. Level of the plotted data. Can be `'bank'` or
+#'   `'company'`.
 #' @param year Integer. Year on which the data should be filtered.
 #' @param sector Character. Sector to filter data on.
 #' @param region Character. Region to filter data on.
@@ -83,7 +83,14 @@ prep_scatter <- function(data_bopo,
   data_scatter
 }
 
-check_prep_scatter <- function(data, year, sector, region, by_group, groups_to_plot, name_col, value_col) {
+check_prep_scatter <- function(data,
+                               year,
+                               sector,
+                               region,
+                               by_group,
+                               groups_to_plot,
+                               name_col,
+                               value_col) {
   abort_if_missing_names(
     data,
     c(
