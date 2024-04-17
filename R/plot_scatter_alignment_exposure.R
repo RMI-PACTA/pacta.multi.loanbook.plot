@@ -8,7 +8,7 @@
 #' @param cap_outliers Numeric. Cap which should be applied to the alignment
 #'   values in the data. Values bigger than cap are plotted on the border of the
 #'   plot.
-#' @param category Character. Character specifying the variable that contains
+#' @param by_group Character. Character specifying the variable that contains
 #'   the groups by which to analyse the loan books.
 #' @param currency Character. Currency to display in the plot labels.
 #'
@@ -20,19 +20,19 @@
 plot_scatter_alignment_exposure <- function(data,
                                             floor_outliers,
                                             cap_outliers,
-                                            category,
+                                            by_group,
                                             currency) {
-  if (!is.null(category)) {
-    if (!inherits(category, "character")) {
-      stop("category must be of class character")
+  if (!is.null(by_group)) {
+    if (!inherits(by_group, "character")) {
+      stop("by_group must be of class character")
     }
-    if (!length(category) == 1) {
-      stop("category must be of length 1")
+    if (!length(by_group) == 1) {
+      stop("by_group must be of length 1")
     }
   } else {
     data <- data %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
-    category <- "aggregate_loan_book"
+    by_group <- "aggregate_loan_book"
   }
 
   if (!is.null(floor_outliers)) {
@@ -72,7 +72,7 @@ plot_scatter_alignment_exposure <- function(data,
       ggplot2::aes(
         x = .data$sum_loan_size_outstanding,
         y = .data$exposure_weighted_net_alignment,
-        color = !!rlang::sym(category)
+        color = !!rlang::sym(by_group)
       )
     ) +
     ggplot2::geom_point() +
@@ -85,7 +85,7 @@ plot_scatter_alignment_exposure <- function(data,
     ggplot2::labs(
       title = title,
       subtitle = subtitle,
-      color = r2dii.plot::to_title(category)
+      color = r2dii.plot::to_title(by_group)
     ) +
     ggplot2::xlab(glue::glue("Financial Exposure (in {currency})")) +
     ggplot2::ylab("Net Aggregate Alignment") +

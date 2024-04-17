@@ -9,7 +9,7 @@ prep_scatter_alignment_exposure(
   year,
   region,
   scenario,
-  category,
+  by_group,
   exclude_groups = "benchmark"
 )
 }
@@ -17,7 +17,7 @@ prep_scatter_alignment_exposure(
 \item{data}{data.frame. Holds net aggregated alignment metrics on the loan
 book level. Must contain columns: \code{"scenario"}, \code{"region"},
 \code{"sector"}, \code{"year"}, \code{"exposure_weighted_net_alignment"},
-\code{"sum_loan_size_outstanding"} and any column implied by \code{category}}
+\code{"sum_loan_size_outstanding"} and any column implied by \code{by_group}}
 
 \item{year}{Integer. Year on which \code{data} should be filtered.}
 
@@ -25,11 +25,11 @@ book level. Must contain columns: \code{"scenario"}, \code{"region"},
 
 \item{scenario}{Character. Scenario to filter \code{data} data frame on.}
 
-\item{category}{Character. Vector of length 1. A column to group by. Must be
+\item{by_group}{Character. Vector of length 1. A column to group by. Must be
 available variables in \code{data}.}
 
 \item{exclude_groups}{Character. Character specifying any values from
-\code{category} that should not be included in the analysis. This is useful to
+\code{by_group} that should not be included in the analysis. This is useful to
 remove benchmarks that are not meant to be compared at the same level.
 Defaults to \code{"benchmark"}.}
 }

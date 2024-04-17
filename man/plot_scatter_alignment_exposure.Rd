@@ -8,7 +8,7 @@ plot_scatter_alignment_exposure(
   data,
   floor_outliers,
   cap_outliers,
-  category,
+  by_group,
   currency
 )
 }
@@ -24,7 +24,7 @@ the plot.}
 values in the data. Values bigger than cap are plotted on the border of the
 plot.}
 
-\item{category}{Character. Character specifying the variable that contains
+\item{by_group}{Character. Character specifying the variable that contains
 the groups by which to analyse the loan books.}
 
 \item{currency}{Character. Currency to display in the plot labels.}

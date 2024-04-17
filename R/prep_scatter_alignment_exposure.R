@@ -3,14 +3,14 @@
 #' @param data data.frame. Holds net aggregated alignment metrics on the loan
 #'   book level. Must contain columns: `"scenario"`, `"region"`,
 #'   `"sector"`, `"year"`, `"exposure_weighted_net_alignment"`,
-#'   `"sum_loan_size_outstanding"` and any column implied by `category`
+#'   `"sum_loan_size_outstanding"` and any column implied by `by_group`
 #' @param year Integer. Year on which `data` should be filtered.
 #' @param region Character. Region to filter `data` data frame on.
 #' @param scenario Character. Scenario to filter `data` data frame on.
-#' @param category Character. Vector of length 1. A column to group by. Must be
+#' @param by_group Character. Vector of length 1. A column to group by. Must be
 #'   available variables in `data`.
 #' @param exclude_groups Character. Character specifying any values from
-#'   `category` that should not be included in the analysis. This is useful to
+#'   `by_group` that should not be included in the analysis. This is useful to
 #'   remove benchmarks that are not meant to be compared at the same level.
 #'   Defaults to `"benchmark"`.
 #'
@@ -23,24 +23,24 @@ prep_scatter_alignment_exposure <- function(data,
                                             year,
                                             region,
                                             scenario,
-                                            category,
+                                            by_group,
                                             exclude_groups = "benchmark") {
-  if (!is.null(category)) {
-    if (!inherits(category, "character")) {
-      stop("category must be of class character")
+  if (!is.null(by_group)) {
+    if (!inherits(by_group, "character")) {
+      stop("by_group must be of class character")
     }
-    if (!length(category) == 1) {
-      stop("category must be of length 1")
+    if (!length(by_group) == 1) {
+      stop("by_group must be of length 1")
     }
   } else {
     data <- data %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
-    category <- "aggregate_loan_book"
+    by_group <- "aggregate_loan_book"
   }
 
   data <- data %>%
     dplyr::filter(
-      !grepl(paste0(.env$exclude_groups, collapse = "|"), !!rlang::sym(category))
+      !grepl(paste0(.env$exclude_groups, collapse = "|"), !!rlang::sym(by_group))
     ) %>%
     dplyr::filter(
       .data$year == .env$year,
@@ -50,7 +50,7 @@ prep_scatter_alignment_exposure <- function(data,
     dplyr::select(
       dplyr::all_of(
         c(
-          .env$category,
+          by_group,
           "scenario",
           "region",
           "sector",
