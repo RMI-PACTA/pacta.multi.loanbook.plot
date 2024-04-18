@@ -3,9 +3,9 @@
 #' @param data_bopo data.frame. Data containing buildout and phaseout alignment
 #'   values. Must contain columns: `'year'`, `'sector'`, `'region'`,
 #'   `'direction'` and either `'name_abcd'` and `'alignment_metric'` or
-#'   `'exposure_weighted_net_alignment'` plus any column implied by `by_group`.
+#'   `'exposure_weighted_net_alignment'` plus any column implied by `group_var`.
 #' @param data_net data.frame. Data containing net alignment values. Must
-#'   contain columns: `by_group`, `'year'`, `'sector'`, `'region'`,
+#'   contain columns: `group_var`, `'year'`, `'sector'`, `'region'`,
 #'   `'direction'` and either `'name_abcd'` and `'alignment_metric'` or
 #'   `'exposure_weighted_net_alignment'`.
 #' @param data_level Character. Level of the plotted data. Can be `'bank'` or
@@ -13,7 +13,7 @@
 #' @param year Integer. Year on which the data should be filtered.
 #' @param sector Character. Sector to filter data on.
 #' @param region Character. Region to filter data on.
-#' @param by_group Character. Vector of length 1. Variable to group by.
+#' @param group_var Character. Vector of length 1. Variable to group by.
 #' @param groups_to_plot Character vector. Groups to filter on.
 #'
 #' @return data.frame
@@ -27,41 +27,41 @@ prep_scatter <- function(data_bopo,
                          year,
                          sector,
                          region,
-                         by_group,
+                         group_var,
                          groups_to_plot = NULL) {
   rlang::arg_match(data_level)
 
-  if (!is.null(by_group)) {
-    if (!inherits(by_group, "character")) {
-      stop("by_group must be of class character")
+  if (!is.null(group_var)) {
+    if (!inherits(group_var, "character")) {
+      stop("group_var must be of class character")
     }
-    if (!length(by_group) == 1) {
-      stop("by_group must be of length 1")
+    if (!length(group_var) == 1) {
+      stop("group_var must be of length 1")
     }
   } else {
     data_bopo <- data_bopo %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
     data_net <- data_net %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
-    by_group <- "aggregate_loan_book"
+    group_var <- "aggregate_loan_book"
   }
 
   if (data_level == "bank") {
-    name_col <- by_group
+    name_col <- group_var
     value_col <- "exposure_weighted_net_alignment"
   } else {
     name_col <- "name_abcd"
     value_col <- "alignment_metric"
   }
 
-  check_prep_scatter(data_bopo, year, sector, region, by_group, groups_to_plot, name_col, value_col)
-  check_prep_scatter(data_net, year, sector, region, by_group, groups_to_plot, name_col, value_col)
+  check_prep_scatter(data_bopo, year, sector, region, group_var, groups_to_plot, name_col, value_col)
+  check_prep_scatter(data_net, year, sector, region, group_var, groups_to_plot, name_col, value_col)
 
   if (is.null(groups_to_plot)) {
     groups_to_plot <- unique(
       c(
-        dplyr::pull(data_bopo, by_group),
-        dplyr::pull(data_net, by_group)
+        dplyr::pull(data_bopo, group_var),
+        dplyr::pull(data_net, group_var)
       )
     )
   }
@@ -72,7 +72,7 @@ prep_scatter <- function(data_bopo,
       .data$year == .env$year,
       .data$sector == .env$sector,
       .data$region == .env$region,
-      !!rlang::sym(by_group) %in% groups_to_plot
+      !!rlang::sym(group_var) %in% groups_to_plot
     ) %>%
     dplyr::select("name" = name_col, "direction", "value" = value_col) %>%
     dplyr::distinct() %>%
@@ -93,14 +93,14 @@ check_prep_scatter <- function(data,
                                year,
                                sector,
                                region,
-                               by_group,
+                               group_var,
                                groups_to_plot,
                                name_col,
                                value_col) {
   abort_if_missing_names(
     data,
     c(
-      by_group,
+      group_var,
       "year",
       "sector",
       "region",
@@ -112,5 +112,5 @@ check_prep_scatter <- function(data,
   abort_if_unknown_values(sector, data, "sector")
   abort_if_unknown_values(region, data, "region")
   abort_if_unknown_values(year, data, "year")
-  abort_if_unknown_values(groups_to_plot, data, by_group)
+  abort_if_unknown_values(groups_to_plot, data, group_var)
 }

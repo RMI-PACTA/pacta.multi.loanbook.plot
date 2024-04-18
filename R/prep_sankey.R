@@ -2,10 +2,10 @@
 #'
 #' @param data_alignment data.frame. Holds aggregated alignment metrics per
 #'   company for tms sectors. Must contain columns: `"name_abcd"`,
-#'   `"sector"` and any column implied by `by_group`.
+#'   `"sector"` and any column implied by `group_var`.
 #' @param region Character. Region to filter `data_alignment` data frame on.
 #' @param year Integer. Year on which `data_alignment` should be filtered.
-#' @param by_group Character. Vector of length 1. Variable to group by.
+#' @param group_var Character. Vector of length 1. Variable to group by.
 #' @param middle_node Character. Column specifying the middle nodes to be
 #'   plotted in sankey plot. Must be present in `data_alignment`.
 #' @param middle_node2 Character. Column specifying the middle nodes to be
@@ -19,27 +19,27 @@
 prep_sankey <- function(data_alignment,
                         region,
                         year,
-                        by_group,
+                        group_var,
                         middle_node,
                         middle_node2 = NULL) {
-  if (!is.null(by_group)) {
-    if (!inherits(by_group, "character")) {
-      stop("by_group must be of class character")
+  if (!is.null(group_var)) {
+    if (!inherits(group_var, "character")) {
+      stop("group_var must be of class character")
     }
-    if (!length(by_group) == 1) {
-      stop("by_group must be of length 1")
+    if (!length(group_var) == 1) {
+      stop("group_var must be of length 1")
     }
   } else {
     data_alignment <- data_alignment %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
-    by_group <- "aggregate_loan_book"
+    group_var <- "aggregate_loan_book"
   }
 
   check_prep_sankey(
     data_alignment = data_alignment,
     region = region,
     year = year,
-    by_group = by_group,
+    group_var = group_var,
     middle_node = middle_node,
     middle_node2 = middle_node2
   )
@@ -60,11 +60,11 @@ prep_sankey <- function(data_alignment,
         ),
         middle_node = !!rlang::sym(middle_node)
       ) %>%
-      dplyr::select(by_group, "middle_node", "is_aligned", "loan_size_outstanding") %>%
-      dplyr::group_by(!!rlang::sym(by_group), .data$middle_node, .data$is_aligned) %>%
+      dplyr::select(group_var, "middle_node", "is_aligned", "loan_size_outstanding") %>%
+      dplyr::group_by(!!rlang::sym(group_var), .data$middle_node, .data$is_aligned) %>%
       dplyr::summarise(loan_size_outstanding = sum(.data$loan_size_outstanding, na.rm = TRUE)) %>%
       dplyr::ungroup() %>%
-      dplyr::arrange(!!rlang::sym(by_group), .data$is_aligned)
+      dplyr::arrange(!!rlang::sym(group_var), .data$is_aligned)
   } else {
     data_out <- data_alignment %>%
       dplyr::mutate(
@@ -76,11 +76,11 @@ prep_sankey <- function(data_alignment,
         middle_node = !!rlang::sym(middle_node),
         middle_node2 = !!rlang::sym(middle_node2)
       ) %>%
-      dplyr::select(by_group, "middle_node", "middle_node2", "is_aligned", "loan_size_outstanding") %>%
-      dplyr::group_by(!!rlang::sym(by_group), .data$middle_node, .data$middle_node2, .data$is_aligned) %>%
+      dplyr::select(group_var, "middle_node", "middle_node2", "is_aligned", "loan_size_outstanding") %>%
+      dplyr::group_by(!!rlang::sym(group_var), .data$middle_node, .data$middle_node2, .data$is_aligned) %>%
       dplyr::summarise(loan_size_outstanding = sum(.data$loan_size_outstanding, na.rm = TRUE)) %>%
       dplyr::ungroup() %>%
-      dplyr::arrange(!!rlang::sym(by_group), .data$is_aligned)
+      dplyr::arrange(!!rlang::sym(group_var), .data$is_aligned)
   }
   data_out
 }
@@ -88,10 +88,10 @@ prep_sankey <- function(data_alignment,
 check_prep_sankey <- function(data_alignment,
                               region,
                               year,
-                              by_group,
+                              group_var,
                               middle_node,
                               middle_node2) {
-  names_all <- c(by_group, "name_abcd", "sector")
+  names_all <- c(group_var, "name_abcd", "sector")
   names_aggergate <- c("region", "year")
   abort_if_missing_names(data_alignment, c(names_all, names_aggergate))
   if (!(region %in% unique(data_alignment$region))) {

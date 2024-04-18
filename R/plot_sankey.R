@@ -3,8 +3,8 @@
 #' @param data data.frame. Should have the same format as output of
 #'   `prep_sankey()` and contain columns: `"middle_node"`, optionally
 #'   `"middle_node2"`, `"is_aligned"`, `"loan_size_outstanding"`, and any column
-#'   implied by `by_group`.
-#' @param by_group Character. Vector of length 1. Variable to group by.
+#'   implied by `group_var`.
+#' @param group_var Character. Vector of length 1. Variable to group by.
 #' @param capitalise_node_labels Logical. Flag indicating if node labels should
 #'   be converted into better looking capitalised form.
 #' @param save_png_to Character. Path where the output in png format should be
@@ -20,34 +20,34 @@
 #' @examples
 #' # TODO
 plot_sankey <- function(data,
-                        by_group,
+                        group_var,
                         capitalise_node_labels = TRUE,
                         save_png_to = NULL,
                         png_name = "sankey.png",
                         nodes_order_from_data = FALSE) {
-  if (!is.null(by_group)) {
-    if (!inherits(by_group, "character")) {
-      stop("by_group must be of class character")
+  if (!is.null(group_var)) {
+    if (!inherits(group_var, "character")) {
+      stop("group_var must be of class character")
     }
-    if (!length(by_group) == 1) {
-      stop("by_group must be of length 1")
+    if (!length(group_var) == 1) {
+      stop("group_var must be of length 1")
     }
   } else {
     data <- data %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
-    by_group <- "aggregate_loan_book"
+    group_var <- "aggregate_loan_book"
   }
 
   check_plot_sankey(
     data = data,
-    by_group = by_group,
+    group_var = group_var,
     capitalise_node_labels = capitalise_node_labels
   )
 
   if (capitalise_node_labels) {
     data_links <- data %>%
       dplyr::mutate(
-        by_group = r2dii.plot::to_title(!!rlang::sym(by_group)),
+        group_var = r2dii.plot::to_title(!!rlang::sym(group_var)),
         middle_node = r2dii.plot::to_title(.data$middle_node)
       )
     if ("middle_node2" %in% names(data_links)) {
@@ -62,7 +62,7 @@ plot_sankey <- function(data,
 
   links_1 <- data_links %>%
     dplyr::select(
-      source = .env$by_group,
+      source = .env$group_var,
       target = "middle_node",
       value = "loan_size_outstanding",
       group = "is_aligned"
@@ -71,7 +71,7 @@ plot_sankey <- function(data,
   if ("middle_node2" %in% names(data_links)) {
     links_2 <- data_links %>%
       dplyr::select(
-        .env$by_group,
+        .env$group_var,
         source = "middle_node",
         target = "middle_node2",
         value = "loan_size_outstanding",
@@ -80,7 +80,7 @@ plot_sankey <- function(data,
 
     links_3 <- data_links %>%
       dplyr::select(
-        .env$by_group,
+        .env$group_var,
         source = "middle_node2",
         target = "is_aligned",
         value = "loan_size_outstanding",
@@ -91,7 +91,7 @@ plot_sankey <- function(data,
   } else {
     links_2 <- data_links %>%
       dplyr::select(
-        .env$by_group,
+        .env$group_var,
         source = "middle_node",
         target = "is_aligned",
         value = "loan_size_outstanding",
@@ -167,9 +167,9 @@ plot_sankey <- function(data,
 }
 
 check_plot_sankey <- function(data,
-                              by_group,
+                              group_var,
                               capitalise_node_labels) {
-  crucial_names <- c(by_group, "middle_node", "is_aligned", "loan_size_outstanding")
+  crucial_names <- c(group_var, "middle_node", "is_aligned", "loan_size_outstanding")
   abort_if_missing_names(data, crucial_names)
   if (!is.logical(capitalise_node_labels)) {
     rlang::abort(

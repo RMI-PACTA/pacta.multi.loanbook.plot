@@ -2,13 +2,13 @@
 #'
 #' @param data data.frame Should have the same format as output of
 #'   `prep_timeline()` and contain columns: `'direction'`, `'year'`,
-#'   `'exposure_weighted_net_alignment'`, and any column implied by `by_group`.
+#'   `'exposure_weighted_net_alignment'`, and any column implied by `group_var`.
 #' @param sector Character. Sector name to be used in the plot title.
 #' @param scenario_source Character. Scenario source to be used in the plot
 #'   caption.
 #' @param scenario Character. Scenario name to be used in the plot caption.
 #' @param region Character. Region to be used in the plot caption.
-#' @param by_group Character. Vector of length 1. Variable to group by.
+#' @param group_var Character. Vector of length 1. Variable to group by.
 #' @param title Character. Custom title if different than default.
 #' @param subtitle Character. Custom subtitle if different than default.
 #' @param alignment_limits Numeric vector of size 2. Limits to be applied to
@@ -26,7 +26,7 @@ plot_timeline <- function(data,
                           scenario_source = NULL,
                           scenario = NULL,
                           region = NULL,
-                          by_group = NULL,
+                          group_var = NULL,
                           title = NULL,
                           subtitle = NULL,
                           alignment_limits = NULL) {
@@ -66,20 +66,20 @@ plot_timeline <- function(data,
     alignment_limits <- c(-max_value, max_value)
   }
 
-  if (!is.null(by_group)) {
-    if (!inherits(by_group, "character")) {
-      stop("by_group must be of class character")
+  if (!is.null(group_var)) {
+    if (!inherits(group_var, "character")) {
+      stop("group_var must be of class character")
     }
-    if (!length(by_group) == 1) {
-      stop("by_group must be of length 1")
+    if (!length(group_var) == 1) {
+      stop("group_var must be of length 1")
     }
   } else {
     data <- data %>%
       dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
-    by_group <- "aggregate_loan_book"
+    group_var <- "aggregate_loan_book"
   }
 
-  check_timeline(data, alignment_limits, by_group)
+  check_timeline(data, alignment_limits, group_var)
 
   p <- ggplot2::ggplot(
     data,
@@ -106,7 +106,7 @@ plot_timeline <- function(data,
       labels = scales::percent
     ) +
     ggplot2::facet_grid(
-      rows = ggplot2::vars(!!rlang::sym(by_group)),
+      rows = ggplot2::vars(!!rlang::sym(group_var)),
       cols = ggplot2::vars(.data$direction),
       labeller = ggplot2::as_labeller(format_facet_labels)
     ) +
@@ -123,14 +123,14 @@ plot_timeline <- function(data,
 }
 # nolint end
 
-check_timeline <- function(data, alignment_limits, by_group) {
+check_timeline <- function(data, alignment_limits, group_var) {
   abort_if_missing_names(
     data,
     c(
       "direction",
       "year",
       "exposure_weighted_net_alignment",
-      by_group
+      group_var
     )
   )
   if ((length(alignment_limits) != 2) || (!is.numeric(alignment_limits))) {
