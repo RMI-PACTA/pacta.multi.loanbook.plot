@@ -10,7 +10,7 @@ plot_timeline(
   scenario_source = NULL,
   scenario = NULL,
   region = NULL,
-  by_group = NULL,
+  group_var = NULL,
   title = NULL,
   subtitle = NULL,
   alignment_limits = NULL
@@ -19,7 +19,7 @@ plot_timeline(
 \arguments{
 \item{data}{data.frame Should have the same format as output of
 \code{prep_timeline()} and contain columns: \code{'direction'}, \code{'year'},
-\code{'exposure_weighted_net_alignment'}, and any column implied by \code{by_group}.}
+\code{'exposure_weighted_net_alignment'}, and any column implied by \code{group_var}.}
 
 \item{sector}{Character. Sector name to be used in the plot title.}
 
@@ -30,7 +30,7 @@ caption.}
 
 \item{region}{Character. Region to be used in the plot caption.}
 
-\item{by_group}{Character. Vector of length 1. Variable to group by.}
+\item{group_var}{Character. Vector of length 1. Variable to group by.}
 
 \item{title}{Character. Custom title if different than default.}
 

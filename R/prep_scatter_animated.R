@@ -7,7 +7,7 @@
 #' @param data_net data.frame. Data containing net alignment values. Must
 #'   contain columns: `group_var`, `'year'`, `'sector'`, `'region'`, `'direction'` and
 #'   either `'name_abcd'` and `'alignment_metric'` or `'exposure_weighted_net_alignment'`.
-#' @param data_level Character. Level of the plotted data. Can be `'bank'` or
+#' @param data_level Character. Level of the plotted data. Can be `'group_var'` or
 #'   `'company'`.
 #' @param sector Character. Sector to filter data on.
 #' @param region Character. Region to filter data on.
@@ -21,7 +21,7 @@
 #' # TODO
 prep_scatter_animated <- function(data_bopo,
                                   data_net,
-                                  data_level = c("bank", "company"),
+                                  data_level = c("group_var", "company"),
                                   sector,
                                   region,
                                   group_var,
@@ -43,7 +43,7 @@ prep_scatter_animated <- function(data_bopo,
     group_var <- "aggregate_loan_book"
   }
 
-  if (data_level == "bank") {
+  if (data_level == "group_var") {
     name_col <- group_var
     value_col <- "exposure_weighted_net_alignment"
   } else {
@@ -76,13 +76,13 @@ prep_scatter_animated <- function(data_bopo,
     dplyr::mutate(
       datapoint = dplyr::case_when(
         grepl(".*[Bb]enchmark,*", .data$name) ~ "Benchmark",
-        TRUE & data_level == "bank" ~ "Bank",
+        TRUE & data_level == "group_var" ~ "Group",
         TRUE & data_level == "company" ~ "Company",
         TRUE ~ "Portfolio"
       )
     ) %>%
     dplyr::mutate(
-      datapoint = factor(.data$datapoint, levels = c("Bank", "Company", "Portfolio", "Benchmark"))
+      datapoint = factor(.data$datapoint, levels = c("Group", "Company", "Portfolio", "Benchmark"))
     ) %>%
     dplyr::arrange(.data$datapoint)
 

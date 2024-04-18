@@ -8,7 +8,7 @@
 #'   contain columns: `group_var`, `'year'`, `'sector'`, `'region'`,
 #'   `'direction'` and either `'name_abcd'` and `'alignment_metric'` or
 #'   `'exposure_weighted_net_alignment'`.
-#' @param data_level Character. Level of the plotted data. Can be `'bank'` or
+#' @param data_level Character. Level of the plotted data. Can be `'group_var'` or
 #'   `'company'`.
 #' @param year Integer. Year on which the data should be filtered.
 #' @param sector Character. Sector to filter data on.
@@ -23,7 +23,7 @@
 #' # TODO
 prep_scatter <- function(data_bopo,
                          data_net,
-                         data_level = c("bank", "company"),
+                         data_level = c("group_var", "company"),
                          year,
                          sector,
                          region,
@@ -46,7 +46,7 @@ prep_scatter <- function(data_bopo,
     group_var <- "aggregate_loan_book"
   }
 
-  if (data_level == "bank") {
+  if (data_level == "group_var") {
     name_col <- group_var
     value_col <- "exposure_weighted_net_alignment"
   } else {
@@ -80,7 +80,7 @@ prep_scatter <- function(data_bopo,
     dplyr::mutate(
       datapoint = dplyr::case_when(
         grepl(".*[Bb]enchmark,*", .data$name) ~ "benchmark",
-        TRUE & (data_level == "bank") ~ "bank",
+        TRUE & (data_level == "group_var") ~ "group",
         TRUE & (data_level == "company") ~ "company",
         TRUE ~ "other"
       )

@@ -4,18 +4,18 @@
 \alias{prep_timeline}
 \title{Prepare data to plot timeline}
 \usage{
-prep_timeline(data, sector, region, by_group, groups_to_plot)
+prep_timeline(data, sector, region, group_var, groups_to_plot)
 }
 \arguments{
 \item{data}{data.frame. Must contain columns: \code{'direction'}, \code{'year'},
 \code{'exposure_weighted_net_alignment'}, \code{'sector'} and any column implied by
-\code{by_group}.}
+\code{group_var}.}
 
 \item{sector}{Character. Sector to filter data on.}
 
 \item{region}{Character. Region to filter data on.}
 
-\item{by_group}{Character. Vector of length 1. Variable to group by.}
+\item{group_var}{Character. Vector of length 1. Variable to group by.}
 
 \item{groups_to_plot}{Character vector. Groups to filter on.}
 }

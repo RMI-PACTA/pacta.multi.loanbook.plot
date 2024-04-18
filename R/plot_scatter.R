@@ -13,7 +13,7 @@
 #' @param alignment_limit Numeric. Limit to be applied to the x- and y-axis
 #'   scales and to alignment values for colouring. By default the maximum
 #'   absolute alignment value of is used.
-#' @param data_level Character. Level of the plotted data. Can be 'bank' or
+#' @param data_level Character. Level of the plotted data. Can be 'group_var' or
 #'   'company'.
 #' @param cap_outliers Numeric. Cap which should be applied to the alignment
 #'   values in the data. Values bigger than cap are plotted on the border of the
@@ -37,7 +37,7 @@ plot_scatter <- function(data,
                          title = NULL,
                          subtitle = NULL,
                          alignment_limit = NULL,
-                         data_level = c("company", "bank"),
+                         data_level = c("company", "group_var"),
                          cap_outliers = NULL,
                          floor_outliers = NULL) {
   rlang::arg_match(data_level)
@@ -74,9 +74,9 @@ plot_scatter <- function(data,
       subtitle <- "Each dot is a company. The companies in the top right quadrant are both building out\n low-carbon technologies and phasing out high-carbon technologies at rates\ngreater or equal to those required by the scenario."
     }
   } else {
-    title <- paste0(title, " per Bank")
+    title <- paste0(title, " by group")
     if (is.null(subtitle)) {
-      subtitle <- "Each dot is a bank. The banks in the top right quadrant are exposed to companies\nwhich on aggregate level are both building out low-carbon technologies and phasing out\nhigh-carbon technologies at rates greater or equal to those required by the scenario."
+      subtitle <- paste0("Each dot is a group. The groups in the top right quadrant are exposed to companies\nwhich on aggregate level are both building out low-carbon technologies and phasing out\nhigh-carbon technologies at rates greater or equal to those required by the scenario.")
     }
   }
 
@@ -186,7 +186,7 @@ plot_scatter <- function(data,
     ) +
     ggplot2::scale_shape_manual(
       name = "",
-      values = c("bank" = 16, "benchmark" = 21, "company" = 16, "other" = 16),
+      values = c("group" = 16, "benchmark" = 21, "company" = 16, "other" = 16),
       labels = r2dii.plot::to_title
     ) +
     r2dii.plot::theme_2dii() +
