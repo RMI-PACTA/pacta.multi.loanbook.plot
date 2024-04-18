@@ -14,7 +14,7 @@
 #' @param sector Character. Sector to filter data on.
 #' @param region Character. Region to filter data on.
 #' @param by_group Character. Vector of length 1. Variable to group by.
-#' @param groups_to_plot Character vector. Bank ids to filter on.
+#' @param groups_to_plot Character vector. Groups to filter on.
 #'
 #' @return data.frame
 #' @export

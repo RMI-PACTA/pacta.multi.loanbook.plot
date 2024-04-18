@@ -37,7 +37,7 @@ contain columns: \code{by_group}, \code{'year'}, \code{'sector'}, \code{'region'
 
 \item{by_group}{Character. Vector of length 1. Variable to group by.}
 
-\item{groups_to_plot}{Character vector. Bank ids to filter on.}
+\item{groups_to_plot}{Character vector. Groups to filter on.}
 }
 \value{
 data.frame

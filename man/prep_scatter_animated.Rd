@@ -33,7 +33,7 @@ either \code{'name_abcd'} and \code{'alignment_metric'} or \code{'exposure_weigh
 
 \item{by_group}{Character. Vector of length 1. Variable to group by.}
 
-\item{groups_to_plot}{Character vector. Group ids to filter on.}
+\item{groups_to_plot}{Character vector. Groups to filter on.}
 }
 \value{
 data.frame
