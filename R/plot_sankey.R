@@ -1,7 +1,9 @@
 #' Make a sankey plot
 #'
 #' @param data data.frame. Should have the same format as output of
-#'   `prep_sankey()`
+#'   `prep_sankey()` and contain columns: `"middle_node"`, optionally
+#'   `"middle_node2"`, `"is_aligned"`, `"loan_size_outstanding"`, and any column
+#'   implied by `by_group`.
 #' @param by_group Character. Vector of length 1. Variable to group by.
 #' @param capitalise_node_labels Logical. Flag indicating if node labels should
 #'   be converted into better looking capitalised form.

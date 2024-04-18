@@ -17,7 +17,7 @@ prep_scatter_alignment_exposure(
 \item{data}{data.frame. Holds net aggregated alignment metrics on the loan
 book level. Must contain columns: \code{"scenario"}, \code{"region"},
 \code{"sector"}, \code{"year"}, \code{"exposure_weighted_net_alignment"},
-\code{"sum_loan_size_outstanding"} and any column implied by \code{by_group}}
+\code{"sum_loan_size_outstanding"} and any column implied by \code{by_group}.}
 
 \item{year}{Integer. Year on which \code{data} should be filtered.}
 

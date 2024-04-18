@@ -15,7 +15,9 @@ plot_sankey(
 }
 \arguments{
 \item{data}{data.frame. Should have the same format as output of
-\code{prep_sankey()}}
+\code{prep_sankey()} and contain columns: \code{"middle_node"}, optionally
+\code{"middle_node2"}, \code{"is_aligned"}, \code{"loan_size_outstanding"}, and any column
+implied by \code{by_group}.}
 
 \item{by_group}{Character. Vector of length 1. Variable to group by.}
 

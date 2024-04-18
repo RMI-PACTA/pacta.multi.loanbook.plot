@@ -7,8 +7,9 @@
 prep_timeline(data, sector, region, by_group, groups_to_plot)
 }
 \arguments{
-\item{data}{data.frame. Must contain columns: \code{by_group}, \code{'direction'},
-\code{'year'}, \code{'exposure_weighted_net_alignment'}, \code{'sector'}.}
+\item{data}{data.frame. Must contain columns: \code{'direction'}, \code{'year'},
+\code{'exposure_weighted_net_alignment'}, \code{'sector'} and any column implied by
+\code{by_group}.}
 
 \item{sector}{Character. Sector to filter data on.}
 

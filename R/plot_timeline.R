@@ -1,8 +1,8 @@
 #' Plot alignment timeline
 #'
 #' @param data data.frame Should have the same format as output of
-#'   `prep_timeline()` and contain columns: 'direction', 'year',
-#'   'exposure_weighted_net_alignment', by_group.
+#'   `prep_timeline()` and contain columns: `'direction'`, `'year'`,
+#'   `'exposure_weighted_net_alignment'`, and any column implied by `by_group`.
 #' @param sector Character. Sector name to be used in the plot title.
 #' @param scenario_source Character. Scenario source to be used in the plot
 #'   caption.

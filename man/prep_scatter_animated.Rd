@@ -16,9 +16,9 @@ prep_scatter_animated(
 }
 \arguments{
 \item{data_bopo}{data.frame. Data containing buildout and phaseout alignment
-values. Must contain columns: \code{by_group}, \code{'year'}, \code{'sector'}, \code{'region'},
+values. Must contain columns: \code{'year'}, \code{'sector'}, \code{'region'},
 \code{'direction'} and either \code{'name_abcd'} and \code{'alignment_metric'} or
-\code{'exposure_weighted_net_alignment'}.}
+\code{'exposure_weighted_net_alignment'} plus any column implied by \code{by_group}.}
 
 \item{data_net}{data.frame. Data containing net alignment values. Must
 contain columns: \code{by_group}, \code{'year'}, \code{'sector'}, \code{'region'}, \code{'direction'} and

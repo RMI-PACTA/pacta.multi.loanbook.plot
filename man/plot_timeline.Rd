@@ -18,8 +18,8 @@ plot_timeline(
 }
 \arguments{
 \item{data}{data.frame Should have the same format as output of
-\code{prep_timeline()} and contain columns: 'direction', 'year',
-'exposure_weighted_net_alignment', by_group.}
+\code{prep_timeline()} and contain columns: \code{'direction'}, \code{'year'},
+\code{'exposure_weighted_net_alignment'}, and any column implied by \code{by_group}.}
 
 \item{sector}{Character. Sector name to be used in the plot title.}
 

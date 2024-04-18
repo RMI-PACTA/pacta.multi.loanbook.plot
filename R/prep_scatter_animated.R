@@ -1,9 +1,9 @@
 #' Prepare data to plot animated scatterplot
 #'
 #' @param data_bopo data.frame. Data containing buildout and phaseout alignment
-#'   values. Must contain columns: `by_group`, `'year'`, `'sector'`, `'region'`,
+#'   values. Must contain columns: `'year'`, `'sector'`, `'region'`,
 #'   `'direction'` and either `'name_abcd'` and `'alignment_metric'` or
-#'   `'exposure_weighted_net_alignment'`.
+#'   `'exposure_weighted_net_alignment'` plus any column implied by `by_group`.
 #' @param data_net data.frame. Data containing net alignment values. Must
 #'   contain columns: `by_group`, `'year'`, `'sector'`, `'region'`, `'direction'` and
 #'   either `'name_abcd'` and `'alignment_metric'` or `'exposure_weighted_net_alignment'`.

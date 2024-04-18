@@ -1,8 +1,8 @@
 #' Prepare data to plot using `plot_sankey()`
 #'
 #' @param data_alignment data.frame. Holds aggregated alignment metrics per
-#'   company for tms sectors. Must contain columns: `by_group`, `name_abcd`,
-#'   `sector`.
+#'   company for tms sectors. Must contain columns: `"name_abcd"`,
+#'   `"sector"` and any column implied by `by_group`.
 #' @param region Character. Region to filter `data_alignment` data frame on.
 #' @param year Integer. Year on which `data_alignment` should be filtered.
 #' @param by_group Character. Vector of length 1. Variable to group by.

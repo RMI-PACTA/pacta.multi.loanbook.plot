@@ -3,7 +3,7 @@
 #' @param data data.frame. Holds net aggregated alignment metrics on the loan
 #'   book level. Must contain columns: `"scenario"`, `"region"`,
 #'   `"sector"`, `"year"`, `"exposure_weighted_net_alignment"`,
-#'   `"sum_loan_size_outstanding"` and any column implied by `by_group`
+#'   `"sum_loan_size_outstanding"` and any column implied by `by_group`.
 #' @param year Integer. Year on which `data` should be filtered.
 #' @param region Character. Region to filter `data` data frame on.
 #' @param scenario Character. Scenario to filter `data` data frame on.

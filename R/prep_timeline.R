@@ -1,7 +1,8 @@
 #' Prepare data to plot timeline
 #'
-#' @param data data.frame. Must contain columns: `by_group`, `'direction'`,
-#'   `'year'`, `'exposure_weighted_net_alignment'`, `'sector'`.
+#' @param data data.frame. Must contain columns: `'direction'`, `'year'`,
+#'   `'exposure_weighted_net_alignment'`, `'sector'` and any column implied by
+#'   `by_group`.
 #' @param sector Character. Sector to filter data on.
 #' @param region Character. Region to filter data on.
 #' @param by_group Character. Vector of length 1. Variable to group by.

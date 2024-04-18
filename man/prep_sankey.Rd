@@ -15,8 +15,8 @@ prep_sankey(
 }
 \arguments{
 \item{data_alignment}{data.frame. Holds aggregated alignment metrics per
-company for tms sectors. Must contain columns: \code{by_group}, \code{name_abcd},
-\code{sector}.}
+company for tms sectors. Must contain columns: \code{"name_abcd"},
+\code{"sector"} and any column implied by \code{by_group}.}
 
 \item{region}{Character. Region to filter \code{data_alignment} data frame on.}
 

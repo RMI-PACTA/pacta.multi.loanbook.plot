@@ -1,7 +1,8 @@
 #' Plot alignment scatterplot
 #'
 #' @param data data.frame. Should have the same format as output of
-#'   `prep_scatter()` and contain columns: 'name', 'buildout', phaseout', 'net'.
+#'   `prep_scatter()` and contain columns: `'name'`, `'buildout'`, `'phaseout'`,
+#'   `'net'`, and any column implied by `by_group`.
 #' @param floor_outliers Numeric. Floor which should be applied to the alignment
 #'   values in the data. Values smaller than floor are plotted on the border of
 #'   the plot.
