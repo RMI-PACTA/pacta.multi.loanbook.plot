@@ -14,7 +14,7 @@ plot_scatter(
   title = NULL,
   subtitle = NULL,
   alignment_limit = NULL,
-  data_level = c("company", "bank"),
+  data_level = c("company", "group_var"),
   cap_outliers = NULL,
   floor_outliers = NULL
 )
@@ -42,7 +42,7 @@ caption.}
 scales and to alignment values for colouring. By default the maximum
 absolute alignment value of is used.}
 
-\item{data_level}{Character. Level of the plotted data. Can be 'bank' or
+\item{data_level}{Character. Level of the plotted data. Can be 'group_var' or
 'company'.}
 
 \item{cap_outliers}{Numeric. Cap which should be applied to the alignment

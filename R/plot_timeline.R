@@ -1,13 +1,14 @@
 #' Plot alignment timeline
 #'
 #' @param data data.frame Should have the same format as output of
-#'   `prep_timeline()` and contain columns: 'direction', 'year',
-#'   'exposure_weighted_net_alignment', 'group_id'.
+#'   `prep_timeline()` and contain columns: `'direction'`, `'year'`,
+#'   `'exposure_weighted_net_alignment'`, and any column implied by `group_var`.
 #' @param sector Character. Sector name to be used in the plot title.
 #' @param scenario_source Character. Scenario source to be used in the plot
 #'   caption.
 #' @param scenario Character. Scenario name to be used in the plot caption.
 #' @param region Character. Region to be used in the plot caption.
+#' @param group_var Character. Vector of length 1. Variable to group by.
 #' @param title Character. Custom title if different than default.
 #' @param subtitle Character. Custom subtitle if different than default.
 #' @param alignment_limits Numeric vector of size 2. Limits to be applied to
@@ -19,11 +20,13 @@
 #'
 #' @examples
 #' # TODO
+# nolint start: cyclocomp_linter.
 plot_timeline <- function(data,
                           sector = NULL,
                           scenario_source = NULL,
                           scenario = NULL,
                           region = NULL,
+                          group_var = NULL,
                           title = NULL,
                           subtitle = NULL,
                           alignment_limits = NULL) {
@@ -63,7 +66,20 @@ plot_timeline <- function(data,
     alignment_limits <- c(-max_value, max_value)
   }
 
-  check_timeline(data, alignment_limits)
+  if (!is.null(group_var)) {
+    if (!inherits(group_var, "character")) {
+      stop("group_var must be of class character")
+    }
+    if (!length(group_var) == 1) {
+      stop("group_var must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    group_var <- "aggregate_loan_book"
+  }
+
+  check_timeline(data, alignment_limits, group_var)
 
   p <- ggplot2::ggplot(
     data,
@@ -89,7 +105,11 @@ plot_timeline <- function(data,
       limits = alignment_limits,
       labels = scales::percent
     ) +
-    ggplot2::facet_grid(group_id ~ direction, labeller = ggplot2::as_labeller(format_facet_labels)) +
+    ggplot2::facet_grid(
+      rows = ggplot2::vars(!!rlang::sym(group_var)),
+      cols = ggplot2::vars(.data$direction),
+      labeller = ggplot2::as_labeller(format_facet_labels)
+    ) +
     r2dii.plot::theme_2dii() +
     ggplot2::theme(
       panel.background = ggplot2::element_rect(fill = "#6c6c6c")
@@ -101,12 +121,18 @@ plot_timeline <- function(data,
     )
   p
 }
+# nolint end
 
-check_timeline <- function(data, alignment_limits) {
-  abort_if_missing_names(data, c(
-    "direction", "year",
-    "exposure_weighted_net_alignment", "group_id"
-  ))
+check_timeline <- function(data, alignment_limits, group_var) {
+  abort_if_missing_names(
+    data,
+    c(
+      "direction",
+      "year",
+      "exposure_weighted_net_alignment",
+      group_var
+    )
+  )
   if ((length(alignment_limits) != 2) || (!is.numeric(alignment_limits))) {
     rlang::abort("'alignment_limits' must be a numeric vector of size 2.")
   }

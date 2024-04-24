@@ -6,7 +6,7 @@
 \usage{
 plot_scatter_animated(
   data,
-  data_level = c("company", "bank"),
+  data_level = c("company", "group_var"),
   sector = NULL,
   scenario_source = NULL,
   scenario = NULL,
@@ -23,7 +23,7 @@ plot_scatter_animated(
 \code{prep_scatter_animated()} and contain columns: 'name', 'buildout',
 'phaseout', 'net' and 'year'.}
 
-\item{data_level}{Character. Level of the plotted data. Can be 'bank' or
+\item{data_level}{Character. Level of the plotted data. Can be 'group_var' or
 'company'.}
 
 \item{sector}{Character. Sector name to be used in the plot title.}

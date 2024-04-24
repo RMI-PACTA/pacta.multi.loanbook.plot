@@ -6,24 +6,23 @@
 \usage{
 prep_sankey(
   data_alignment,
-  matched_loanbook,
   region,
   year,
+  group_var,
   middle_node,
   middle_node2 = NULL
 )
 }
 \arguments{
 \item{data_alignment}{data.frame. Holds aggregated alignment metrics per
-company for tms sectors. Must contain columns: \code{group_id}, \code{name_abcd},
-\code{sector}.}
-
-\item{matched_loanbook}{data.frame. Holds the matched loan books of a set of
-groups. Must include a column \code{group_id} and \code{loan_size_outstanding}.}
+company for tms sectors. Must contain columns: \code{"name_abcd"},
+\code{"sector"} and any column implied by \code{group_var}.}
 
 \item{region}{Character. Region to filter \code{data_alignment} data frame on.}
 
 \item{year}{Integer. Year on which \code{data_alignment} should be filtered.}
+
+\item{group_var}{Character. Vector of length 1. Variable to group by.}
 
 \item{middle_node}{Character. Column specifying the middle nodes to be
 plotted in sankey plot. Must be present in \code{data_alignment}.}

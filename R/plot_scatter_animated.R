@@ -3,7 +3,7 @@
 #' @param data data.frame. Should have the same format as output of
 #'   `prep_scatter_animated()` and contain columns: 'name', 'buildout',
 #'   'phaseout', 'net' and 'year'.
-#' @param data_level Character. Level of the plotted data. Can be 'bank' or
+#' @param data_level Character. Level of the plotted data. Can be 'group_var' or
 #'   'company'.
 #' @param sector Character. Sector name to be used in the plot title.
 #' @param scenario_source Character. Scenario source to be used in the plot
@@ -29,7 +29,7 @@
 #' # TODO
 # nolint start: cyclocomp_linter.
 plot_scatter_animated <- function(data,
-                                  data_level = c("company", "bank"),
+                                  data_level = c("company", "group_var"),
                                   sector = NULL,
                                   scenario_source = NULL,
                                   scenario = NULL,
@@ -70,9 +70,9 @@ plot_scatter_animated <- function(data,
       subtitle <- "Each dot is a company. The companies in the top right quadrant are both building out\n low-carbon technologies and phasing out high-carbon technologies at rates\ngreater or equal to those required by the scenario."
     }
   } else {
-    title <- paste0(title, " per Bank")
+    title <- paste0(title, " per group")
     if (is.null(subtitle)) {
-      subtitle <- "Each dot is a bank. The banks in the top right quadrant are exposed to companies\nwhich on aggregate level are both building out low-carbon technologies and phasing out\nhigh-carbon technologies at rates greater or equal to those required by the scenario."
+      subtitle <- paste0("Each dot is a group. The groups in the top right quadrant are exposed to companies\nwhich on aggregate level are both building out low-carbon technologies and phasing out\nhigh-carbon technologies at rates greater or equal to those required by the scenario.")
     }
   }
 

@@ -1,17 +1,16 @@
 #' Plot alignment scatterplot
 #'
 #' @param data data.frame. Should have the same format as output of
-#'   `prep_scatter()` and contain columns: 'name', 'buildout', phaseout', 'net'.
+#'   `prep_scatter()` and contain columns: `'name'`, `'buildout'`, `'phaseout'`,
+#'   `'net'`, and any column implied by `group_var`.
 #' @param floor_outliers Numeric. Floor which should be applied to the alignment
 #'   values in the data. Values smaller than floor are plotted on the border of
 #'   the plot.
 #' @param cap_outliers Numeric. Cap which should be applied to the alignment
 #'   values in the data. Values bigger than cap are plotted on the border of the
 #'   plot.
-#' @param category Character. Character specifying the variable that contains
-#'   the groups by which to analyse the loan books. Usually this will be
-#'   `"group_id"` unless there is a clearly specified reason to use another
-#'   category.
+#' @param group_var Character. Character specifying the variable that contains
+#'   the groups by which to analyse the loan books.
 #' @param currency Character. Currency to display in the plot labels.
 #'
 #' @return object of type "ggplot"
@@ -22,8 +21,21 @@
 plot_scatter_alignment_exposure <- function(data,
                                             floor_outliers,
                                             cap_outliers,
-                                            category,
+                                            group_var,
                                             currency) {
+  if (!is.null(group_var)) {
+    if (!inherits(group_var, "character")) {
+      stop("group_var must be of class character")
+    }
+    if (!length(group_var) == 1) {
+      stop("group_var must be of length 1")
+    }
+  } else {
+    data <- data %>%
+      dplyr::mutate(aggregate_loan_book = "Aggregate loan book")
+    group_var <- "aggregate_loan_book"
+  }
+
   if (!is.null(floor_outliers)) {
     data <- data %>%
       dplyr::mutate(
@@ -61,7 +73,7 @@ plot_scatter_alignment_exposure <- function(data,
       ggplot2::aes(
         x = .data$sum_loan_size_outstanding,
         y = .data$exposure_weighted_net_alignment,
-        color = !!rlang::sym(category)
+        color = !!rlang::sym(group_var)
       )
     ) +
     ggplot2::geom_point() +
@@ -74,7 +86,7 @@ plot_scatter_alignment_exposure <- function(data,
     ggplot2::labs(
       title = title,
       subtitle = subtitle,
-      color = r2dii.plot::to_title(category)
+      color = r2dii.plot::to_title(group_var)
     ) +
     ggplot2::xlab(glue::glue("Financial Exposure (in {currency})")) +
     ggplot2::ylab("Net Aggregate Alignment") +
