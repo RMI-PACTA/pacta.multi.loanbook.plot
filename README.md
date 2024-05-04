@@ -9,6 +9,9 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/pacta.multi.loanbook.plot)](https://CRAN.R-project.org/package=pacta.multi.loanbook.plot)
+[![R-CMD-check](https://github.com/RMI-PACTA/pacta.multi.loanbook.analysis/actions/workflows/R.yml/badge.svg)](https://github.com/RMI-PACTA/pacta.multi.loanbook.analysis/actions/workflows/R.yml)
+[![Codecov test
+coverage](https://codecov.io/gh/RMI-PACTA/pacta.multi.loanbook.plot/branch/main/graph/badge.svg)](https://app.codecov.io/gh/RMI-PACTA/pacta.multi.loanbook.plot?branch=main)
 <!-- badges: end -->
 
 The goal of pacta.multi.loanbook.plot is to …
