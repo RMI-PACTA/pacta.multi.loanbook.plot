@@ -1,6 +1,6 @@
 Package: pacta.multi.loanbook.plot
 Title: Tools to Visualize Climate Metrics for Multiple Loanbooks
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
     c(person(given = "Monika",
              family = "Furdyna",
