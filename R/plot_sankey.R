@@ -152,7 +152,7 @@ plot_sankey <- function(data,
     if (webshot::is_phantomjs_installed()) {
       file_name <- file.path(save_png_to, png_name)
       # you convert it as png
-      webshot::webshot(temp_html, file_name, vwidth = 1000, vheight = 900)
+      webshot::webshot(temp_html, path.expand(file_name), vwidth = 1000, vheight = 900)
     } else {
       rlang::abort(
         glue::glue(
